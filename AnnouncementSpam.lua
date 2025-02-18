@@ -18,62 +18,102 @@ local v0 = {
     "Truth", "Lie", "Illusion", "Reality", "Dream", "Nightmare", "Vision", "Sight", "Glance", "Gaze", "Stare", "Blink", "Tear", "Smile", "Laugh", "Cry", "Scream", "Shout", "Whisper", "Voice",
     "Breath", "Heartbeat", "Pulse", "Touch", "Embrace", "Kiss", "Hope", "Fear", "Love", "Hate", "Joy", "Sorrow", "Anger", "Calm", "Peace", "War", "Victory", "Defeat", "Courage", "Cowardice"
 };
+local reps = {
+    a = "@",
+    e = "3",
+    i = "1",
+    o = "0",
+    s = "$",
+    g = "9",
+    t = "7"
+}
+
+local function obfuscate(word)
+    local c = {}
+    for i = 1, #word do
+        table.insert(chars, word:sub(i, i))
+    end
+    
+    local RI = math.random(1, #chars)
+    local ctr = chars[RI]:lower()
+    
+    if reps[ctr] then
+        chars[RI] = reps[ctr]
+    end
+    
+    return table.concat(chars)
+end
+
+local function rw(word)
+    local randomized = ""
+    for i = 1, #word do
+        local char = word:sub(i, i)
+        if math.random() > 0.5 then
+            char = char:upper()
+        end
+        randomized = randomized .. char
+    end
+    return randomized
+end
 
 local function v1(v3)
-	local v4 = 0;
-	local v5;
-	local v6;
-	while true do
-		if (v4 == (351 - (87 + 263))) then
-			while true do
-				local v9 = 180 - (67 + 113);
-				while true do
-					if (v9 == 0) then
-						if (v5 == ((257 + 93) - ((213 - 126) + 194 + 69))) then
-							v6 = {};
-							for v10 = 3 - 2, v3 do
-								table.insert(v6, v0[math.random((1133 - (802 + 150)) - (67 + 113), #v0)]);
-							end
-							v5 = 2 - 1;
-						end
-						if (v5 == (1 + (0 - 0))) then
-							return table.concat(v6, " ");
-						end
-						break;
-					end
-				end
-			end
-			break;
-		end
-		if (v4 == (0 + 0)) then
-			v5 = 0;
-			v6 = nil;
-			v4 = 998 - (915 + 82);
-		end
-	end
+    local v4 = 0;
+    local v5;
+    local v6;
+    while true do
+        if v4 == 1 then
+            while true do
+                local v9 = 0;
+                while true do
+                    if v9 == 0 then
+                        if v5 == 0 then
+                            v6 = {};
+                            for v10 = 1, v3 do
+                                local word = v0[math.random(1, #v0)];
+                                word = obfuscate(word)
+                                word = rw(word)
+                                table.insert(v6, word);
+                            end
+                            v5 = 1;
+                        end
+                        if v5 == 1 then
+                            return table.concat(v6, " ") .. ".";
+                        end
+                        break;
+                    end
+                end
+            end
+            break;
+        end
+        if v4 == 0 then
+            v5 = 0;
+            v6 = nil;
+            v4 = 1;
+        end
+    end
 end
 
 local v2 = {
-	[2 - 1] = "Announcement",
-	[2 + 0] = {
-		Message = "",
-		Radius = (1089 - (848 - 203)),
-		Name = "Valindra",
-		Pos = Vector3.new((2292.4168701171875 - (1069 + 118)) + (900 - 503), -(664.1751098632812 - 360), 104.83306884765625 + 492)
-	}
+    [1] = "Announcement",
+    [2] = {
+        Message = "",
+        Radius = 44,
+        Name = "Valindra",
+        Pos = Vector3.new(1502.4168701171875, -304.1751098632812, 596.83306884765625)
+    }
 };
 
 while true do
-	local v7 = 0 - 0;
-	while true do
-		if (v7 == 1) then
-			game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("16"):FireServer(unpack(v2));
-			break;
-		end
-		if (v7 == (0 + 0)) then
-			task.wait(791.1 - (368 + 423));
-			v2[6 - 4]['Message'] = v1((33 - (10 + 8)) - 11) .. ".";
-			v7 = 3 - 2;
-		end
-	end
+    local v7 = 0;
+    while true do
+        if v7 == 1 then
+            game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("16"):FireServer(unpack(v2));
+            break;
+        end
+        if v7 == 0 then
+            task.wait(0.1 + math.random(1, 3)); 
+            v2[2]['Message'] = v1(math.random(2, 5));  
+            v7 = 1;
+        end
+    end
 end
